@@ -1,0 +1,18 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: taxi-dev
+  pool: 5
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: taxi-test
+  pool: 5
+
+production:
+  adapter: postgresql
+  database: taxi-prod
+  prepared_statements: false
+  username:
+  password:
