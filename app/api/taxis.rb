@@ -1,8 +1,6 @@
 #encoding: utf-8
 require './app/api/entities/taxi.rb'
 require './app/model/taxi.rb'
-require 'pry'
-require 'pry-nav'
 
 module TaxiApp
   module Api

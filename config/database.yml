@@ -14,5 +14,6 @@ production:
   adapter: postgresql
   database: taxi-prod
   prepared_statements: false
-  username:
-  password:
+  username: fasttaxi
+  password: j6N48t2YpxfDRad4
+  pool: 5

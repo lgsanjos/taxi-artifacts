@@ -1,8 +1,6 @@
 #encoding: utf-8
 require './app/api/entities/request.rb'
 require './app/model/request.rb'
-require 'pry'
-require 'pry-nav'
 require 'sidekiq'
 
 module TaxiApp

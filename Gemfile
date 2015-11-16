@@ -3,8 +3,6 @@ source 'http://rubygems.org'
 ruby '2.2.3'
 
 gem 'activerecord'
-gem 'compass'
-gem 'foreman'
 gem 'geocoder'
 gem 'grape'
 gem 'grape-entity'
@@ -12,12 +10,15 @@ gem 'grape-swagger'
 gem 'i18n'
 gem 'pg'
 gem 'oj'
-gem 'unicode_utils'
 gem 'sidekiq'
 gem 'xmpp4r'
 gem 'sinatra'
 gem 'rest-client'
 gem 'sass'
+
+group :production do
+  gem 'unicorn'
+end
 
 group :development do
   gem 'ruby-prof'
