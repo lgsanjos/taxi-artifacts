@@ -1,7 +1,6 @@
 require 'rake'
 require 'rubygems'
 require 'pathname'
-require 'rspec/core/rake_task'
 require 'oj'
 require 'active_record'
 
@@ -40,5 +39,8 @@ task :environment do
   ActiveRecord::Base.establish_connection DatabaseTasks.env.to_sym
 end
 load 'active_record/railties/databases.rake'
-RSpec::Core::RakeTask.new(:spec)
+if ENV['RACK_ENV'] != 'production'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+end
 task :default => :spec

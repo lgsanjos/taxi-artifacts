@@ -11,6 +11,7 @@ test:
   pool: 5
 
 production:
+  host: db.fasttaxi.com.br
   adapter: postgresql
   database: taxi-prod
   prepared_statements: false

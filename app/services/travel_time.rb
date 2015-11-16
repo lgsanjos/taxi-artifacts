@@ -2,8 +2,6 @@ require 'oj'
 require 'timeout'
 require "uri"
 require 'json'
-require 'pry'
-require 'pry-nav'
 require 'json'
 require 'rest-client'
 
