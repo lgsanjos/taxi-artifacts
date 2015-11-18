@@ -1,5 +1,6 @@
 require 'sidekiq'
 require 'yaml'
+require 'resolv-replace'
 Dir["./config/initializers/**.rb", "./app/**.rb", "./app/workers/**.rb", "./app/model/**.rb", "./app/services/**.rb"].each {|file| require file}
 
 config = YAML.load_file('./config/redis.yml')
