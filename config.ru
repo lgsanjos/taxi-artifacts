@@ -10,7 +10,7 @@ ENV['geocoder-provider'] = 'google'
 require './app/api'
 require './app/web'
 
-if ENV['RACK_ENV'] == production
+if ENV['RACK_ENV'] == 'production'
   require 'newrelic_rpm'
 end
 
