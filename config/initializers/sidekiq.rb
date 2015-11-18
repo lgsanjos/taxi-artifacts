@@ -5,7 +5,6 @@ Dir["./config/initializers/**.rb", "./app/**.rb", "./app/workers/**.rb", "./app/
 config = YAML.load_file('./config/redis.yml')
 env = ENV['RACK_ENV'].nil? ? 'development' : ENV['RACK_ENV']
 properties = config[env]
-{"host"=>"localhost", "port"=>6379, "database"=>0}
 
 host = properties['host']
 port = properties['port']
