@@ -17,9 +17,9 @@ db_num = properties['database']
 #end
 
 Sidekiq.configure_server do |config|
-  config.redis = { :host => "redis://#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { :host => "redis://#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
 end
