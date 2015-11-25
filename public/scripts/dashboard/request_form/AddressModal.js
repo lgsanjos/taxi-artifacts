@@ -66,7 +66,10 @@ var AddressModal = React.createClass({
   },
 
   componentDidMount: function () {
-    this.refs.address.getDOMNode().focus();
+    let addressField = this.refs.address;
+
+    if (addressField !== undefined)
+        addressField.getDOMNode().focus();
   },
 
   _onChange(e) {

@@ -25,8 +25,13 @@ var LoginPage = React.createClass({
     }
   },
 
+  stopEditing: function () {
+      this.clearFields();
+  },
+
   clearFields: function () {
     this.setState({
+      edit_mode: false,
       name: '',
       username: '',
       email: '',
@@ -38,18 +43,16 @@ var LoginPage = React.createClass({
   },
 
   edit: function (user) {
-    this.setState({ edit_mode: true  });
-
     this.setState({
+        edit_mode: true,
+        id: user.id,
         name: user.name,
         username: user.username,
         email: user.email,
         password: user.password,
-        confirm_password: user.confirm_password,
         phone: user.phone,
         taxi_id: user.taxi_id,
       });
-
   },
 
   cancel_edit: function () {
@@ -86,14 +89,16 @@ var LoginPage = React.createClass({
   },
 
   submitUpdate: function (user) {
+    var token = AuthService.currentToken();
        $.ajax({
-          url: '/api/v1/user/update',
+          url: '/api/v1/users/update',
           dataType: 'json',
-          type: 'POST',
+          type: 'PUT',
           data: JSON.stringify(user),
+          headers: {"x-access-token": token},
           processData: false,
           success: function(data) {
-              document.getElementById('success').removeAttribute("hidden");
+              this.updateUserList();
           }.bind(this),
           error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
@@ -110,6 +115,7 @@ var LoginPage = React.createClass({
           processData: false,
           success: function(data) {
               document.getElementById('success').removeAttribute("hidden");
+              this.updateUserList();
           }.bind(this),
           error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
@@ -117,30 +123,62 @@ var LoginPage = React.createClass({
       });
   },
 
+  checkUsername: function(user) {
+      if (!user.name || !user.username)
+         throw 'Nome e Usuário são obrigatórios.';   
+  },
+
+  checkPasswordWhenEditingUser: function(user) {
+      if (!this.state.edit_mode) 
+          return;
+
+      if (user.password === undefined || user.password === '')
+          return;
+      
+      if (user.password !== this.state.confirm_password) {
+         throw 'A senha e a confirmação da senha estão diferentes.';
+       }
+  },
+
+  checkPasswordWhenNewUser: function(user) {
+      if (this.state.edit_mode)
+          return;
+      
+      if (user.password === '')
+         throw 'A senha é obrigatória.';   
+      
+      if (user.password !== this.state.confirm_password) {
+         throw 'A senha e a confirmação da senha estão diferentes.';
+       }
+  },
+
   handleSubmit: function(e) {
       e.preventDefault();
       
-     if (!name || !username) {
-        return;
-      }
-
       var user = {
+        id: this.state.id,
         name: this.state.name,
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
-        confirm_password: this.state.confirm_password,
         phone: this.state.phone,
         taxi_id: this.state.taxi_id,
       };
 
-      if (this.state.edit_mode)
-          this.submitUpdate(user);
-      else
-          this.submitNewUser(user);
+      try {
+          this.checkUsername(user);
+          this.checkPasswordWhenNewUser(user);
+          this.checkPasswordWhenEditingUser(user);
+          
+          if (this.state.edit_mode)
+              this.submitUpdate(user);
+          else
+              this.submitNewUser(user);
 
-     this.clearFields();
-     return;
+          this.clearFields();
+      } catch(e) {
+          alert(e);
+      }
   },
 
   getTaxiDescription: function(id) {
@@ -167,23 +205,23 @@ var LoginPage = React.createClass({
           <form onSubmit={this.handleSubmit}>
             <div className='form-group'>
               <label>Nome</label>
-              <input type='text' id='name' ref="name" name='name' className='form-control' required placeholder='Nome Completo' onChange={this._onChange} value={this.state.name}/>
+              <input type='text' id='name' ref="name" name='name' className='form-control' placeholder='Nome Completo' onChange={this._onChange} value={this.state.name}/>
             </div>
             <div className='form-group'>
               <label>Usuário</label>
-              <input type='text' id='username' ref='username' name='username' className='form-control' required placeholder='Nome de usuário' value={this.state.username} onChange={this._onChange}/>
+              <input type='text' id='username' ref='username' name='username' className='form-control' placeholder='Nome de usuário' value={this.state.username} onChange={this._onChange}/>
             </div>
             <div className='form-group'>
               <label>Email</label>
-              <input type='email' className='form-control' ref='email' name='email' required placeholder='Email' value={this.state.email} onChange={this._onChange}/>
+              <input type='email' className='form-control' ref='email' name='email' placeholder='Email' value={this.state.email} onChange={this._onChange}/>
             </div>
             <div className='form-group'>
               <label>Senha</label>
-              <input type='password' className='form-control' ref='password' required placeholder='Senha' name='password' value={this.state.password} onChange={this._onChange}/>
+              <input type='password' className='form-control' ref='password' placeholder='Senha' name='password' value={this.state.password} onChange={this._onChange}/>
             </div>
             <div className='form-group'>
               <label>Confirmar senha</label>
-              <input type='password' name='confirm_password' ref='confirmPassword' className='form-control' required placeholder='Confirmar senha' value={this.state.password_confirm} onChange={this._onChange}/>
+              <input type='password' name='confirm_password' ref='confirmPassword' className='form-control' placeholder='Confirmar senha' value={this.state.confirm_password} onChange={this._onChange}/>
             </div>
             <div className='form-group'>
               <label>Telefone</label>
@@ -200,6 +238,8 @@ var LoginPage = React.createClass({
             </div>
 
             <button type='submit' className='btn btn-primary' >Cadastrar</button>
+            &nbsp;
+            <button className='btn btn-default' disabled={!this.state.edit_mode} onClick={this.stopEditing} >Cancelar</button>
           </form>
         </div>
 
