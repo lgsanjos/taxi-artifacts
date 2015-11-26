@@ -64,6 +64,7 @@ var RequestRow = React.createClass({
         { this.rideInfo(request) }
      </div>
      <div className='request-info col-md-4'>
+       <p><b>Bagageiro grande? </b>{request.large_trunk ? 'Sim' : 'Não'}</p>
        <p><b>Forma de pagamento: </b>{paymentMethodLabel(request.payment)}</p>
        <p><b>Obs: </b>{request.observation}</p>
      </div>

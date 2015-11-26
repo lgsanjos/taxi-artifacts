@@ -42,6 +42,7 @@ var RequestTaxiForm = React.createClass({
       name: '',
       phone: '',
       cellphone: '',
+      large_trunk: false,
       address: '',
       observation: '',
       payment: 'money'
@@ -65,12 +66,17 @@ var RequestTaxiForm = React.createClass({
       cellphone: '',
       address: '',
       observation: '',
+      large_trunk: false,
       payment: 'money'
     });
 
     this.refs.requestForm.getDOMNode().reset();
     this.refs.cellphone.clear();
     this.refs.phone.clear();
+  },
+  
+  toggleLargeTrunk: function() {
+    this.setState({ large_trunk: !this.state.large_trunk });
   },
 
   setMissingInfoError: function (message) {
@@ -108,6 +114,7 @@ var RequestTaxiForm = React.createClass({
     request.payment = this.state.payment;
     request.created_at = new Date().toString();
     request.creator = {name: username };
+    request.large_trunk = this.state.large_trunk;
 
     var customer = {};
     customer.name = this.state.name;
@@ -211,6 +218,7 @@ var RequestTaxiForm = React.createClass({
              <p><b>Cidade:</b> {requestAddress.locality} - {requestAddress.administrative_area_level_1}</p>
              <hr/>
              <h4>Outros:</h4>
+             <p><b>Bagageiro:</b> {this.state.large_trunk ? 'Sim' : 'Não'}</p>
              <p><b>Pagamento:</b> {paymentMethodLabel(this.state.payment)}</p>
              <p><b>Obs:</b> {this.state.observation}</p>
            </div>
@@ -246,10 +254,17 @@ var RequestTaxiForm = React.createClass({
           <span className='required'>*</span>
         </label>
         <input className='form-control' id='complete_address' ref="complete_address" name='complete_address' minlength='5' type='text' 
-        onClick={() => { this.openAddressModal() }}
-        onChange={() => { this.openAddressModal() }}
+        onClick={this.openAddressModal }
+        onChange={this.openAddressModal}
         value={this.state.address} />
       </div>
+
+      <div className="checkbox">
+        <label>
+          <input type="checkbox" name='large_trunk' onChange={this.toggleLargeTrunk} disabled={this.state.isConfirmRequestModal} checked={this.state.large_trunk}/> Bagageiro grande?
+        </label>
+      </div>
+
       <div className='form-group'>
         <label htmlFor='Pagamento' className='control-label'>
           Pagamento
