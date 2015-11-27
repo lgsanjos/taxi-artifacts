@@ -37,7 +37,12 @@ module TaxiApp
           request = Request.find(params[:id])
           request.accepted_at = Time.now
           request.taxi = params[:taxi] if params[:taxi]
-          request.save
+          request.save!
+
+          taxi = Taxi.find(params[:taxi]['id'])
+          taxi.busy = true
+          taxi.save!
+
           present request, with: TaxiApp::Api::Entities::Request
         end
 
@@ -46,6 +51,16 @@ module TaxiApp
             request = Request.find(params[:id])
             request.save!
             ProcessRequestWorker.perform_async request.id
+            present request, with: TaxiApp::Api::Entities::Request
+          end
+        end
+
+        resource ':id/finish' do
+          post do
+            request = Request.find(params[:id])
+            request.destination = params[:destination]
+            request.final_taxi_location = params[:final_taxi_location]
+            request.save!
             present request, with: TaxiApp::Api::Entities::Request
           end
         end

@@ -54,6 +54,7 @@ module TaxiApp
             taxi = Taxi.new(hash)
             taxi.busy = true
             taxi.generate_token
+            taxi.user =  User.new(name: 'teste', username: 'lixo')
             taxi.save!
 
             present taxi, with: TaxiApp::Api::Entities::Taxi
