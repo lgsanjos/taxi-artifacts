@@ -6,7 +6,7 @@ module TaxiApp
         expose :number, documentation: { type: 'integer', description: 'Email' }
         expose :taxi, documentation: { type: 'string', description: 'Image' }
         expose :customer, documentation: { type: 'string', description: 'Username' }
-        expose :large_trunk, documentation: { type: 'string', description: 'large trunk' }
+        expose :large_trunk, documentation: { type: 'boolean', description: 'large trunk' }
         expose :address, documentation: { type: 'string', description: 'Username' }
         expose :created_at, documentation: { type: 'dateTime', description: 'First name' }
         expose :accepted_at, documentation: { type: 'dateTime', description: 'First name' }
