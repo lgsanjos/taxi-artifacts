@@ -18,7 +18,7 @@ var NewTaxiPage = React.createClass({
   },
 
   clearFields: function() {
-     this.setState({ 
+     this.setState({
         edit_mode: false,
         license_plate: '',
         code: '',
@@ -28,9 +28,9 @@ var NewTaxiPage = React.createClass({
         cartao: false
     });
   },
-  
+
   edit: function(taxi) {
-    this.setState({ 
+    this.setState({
         edit_mode: true,
 
         license_plate: taxi.license_plate,
@@ -91,7 +91,7 @@ var NewTaxiPage = React.createClass({
               console.error(this.props.url, status, err.toString());
           }.bind(this)
       });
-  
+
   },
 
   handleSubmit: function(e) {
@@ -113,7 +113,7 @@ var NewTaxiPage = React.createClass({
       } else {
         this.submitNewTaxi(newTaxi);
       }
-     
+
       return;
   },
 
@@ -144,14 +144,14 @@ var NewTaxiPage = React.createClass({
 
             <div className='form-group'>
               <label>Placa do taxi</label>
-              <input type='text' name='license_plate' ref="license_plate" className='form-control' required placeholder='Placa do carro' value={this.state.license_plate}  onChange={this._onChange}/>
+              <input type='text' name='license_plate' ref="license_plate" className='form-control' maxLength="8" required placeholder='Placa do carro' value={this.state.license_plate}  onChange={this._onChange}/>
             </div>
 
             <div className='form-group'>
               <label>Código</label>
               <input type='text' name='code' ref="code" className='form-control' required placeholder='Código interno' value={this.state.code}  onChange={this._onChange}/>
             </div>
- 
+
             <div className='form-group'>
               <label>Bagageiro grande?</label>
 
@@ -163,7 +163,7 @@ var NewTaxiPage = React.createClass({
                 </label>
                </div>
             </div>
- 
+
             <div className='form-group'>
               <label>Formas de pagamento aceito</label>
 
@@ -187,9 +187,6 @@ var NewTaxiPage = React.createClass({
           </form>
         </div>
 
-
-
-
         <div id="taxi_list" className='col-md-9'>
           <table className='table table-condensed table-hover'>
               <thead>
@@ -203,7 +200,7 @@ var NewTaxiPage = React.createClass({
                 </tr>
               </thead>
               <tbody>
-          { 
+          {
               this.state.taxi_list.map((taxi) => {
                 return (
                   <tr onClick={this.edit.bind(this, taxi)}>
@@ -214,7 +211,7 @@ var NewTaxiPage = React.createClass({
                     <td>{taxi.payment_methods.join(', ')}</td>
                     <td>{taxi.busy ? 'Sim' : taxi.busy}</td>
                   </tr>
-                ) 
+                )
               })
             }
             </tbody>

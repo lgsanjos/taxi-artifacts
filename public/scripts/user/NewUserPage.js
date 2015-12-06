@@ -39,7 +39,7 @@ var LoginPage = React.createClass({
       confirm_password: '',
       phone: '',
       taxi_id: ''
-    }); 
+    });
   },
 
   edit: function (user) {
@@ -125,16 +125,16 @@ var LoginPage = React.createClass({
 
   checkUsername: function(user) {
       if (!user.name || !user.username)
-         throw 'Nome e Usuário são obrigatórios.';   
+         throw 'Nome e Usuário são obrigatórios.';
   },
 
   checkPasswordWhenEditingUser: function(user) {
-      if (!this.state.edit_mode) 
+      if (!this.state.edit_mode)
           return;
 
       if (user.password === undefined || user.password === '')
           return;
-      
+
       if (user.password !== this.state.confirm_password) {
          throw 'A senha e a confirmação da senha estão diferentes.';
        }
@@ -143,18 +143,18 @@ var LoginPage = React.createClass({
   checkPasswordWhenNewUser: function(user) {
       if (this.state.edit_mode)
           return;
-      
+
       if (user.password === '')
-         throw 'A senha é obrigatória.';   
-      
+         throw 'A senha é obrigatória.';
+
       if (user.password !== this.state.confirm_password) {
          throw 'A senha e a confirmação da senha estão diferentes.';
        }
   },
 
   handleSubmit: function(e) {
-      e.preventDefault();
-      
+     e.preventDefault();
+
       var user = {
         id: this.state.id,
         name: this.state.name,
@@ -169,7 +169,7 @@ var LoginPage = React.createClass({
           this.checkUsername(user);
           this.checkPasswordWhenNewUser(user);
           this.checkPasswordWhenEditingUser(user);
-          
+
           if (this.state.edit_mode)
               this.submitUpdate(user);
           else
@@ -257,7 +257,7 @@ var LoginPage = React.createClass({
                 </tr>
               </thead>
               <tbody>
-          { 
+          {
               this.state.user_list.map((user) => {
                 return (
                   <tr onClick={this.edit.bind(this, user)}>
@@ -268,7 +268,7 @@ var LoginPage = React.createClass({
                     <td>{user.phone}</td>
                     <td>{this.getTaxiDescription(user.taxi_id)}</td>
                   </tr>
-                ) 
+                )
               })
             }
             </tbody>

@@ -7,7 +7,7 @@ var requestAddress = {};
 var firstTime = true;
 
 var AddressModal = React.createClass({
-  
+
   setupAddressInput: function () {
      /*jshint unused:false*/
     var autocomplete = new google.maps.places.Autocomplete( (document.getElementById('address')), {types: ['geocode']});
@@ -65,17 +65,14 @@ var AddressModal = React.createClass({
     };
   },
 
-  componentDidMount: function () {
-    let addressField = this.refs.address;
-
-    if (addressField !== undefined)
-        addressField.getDOMNode().focus();
+  componentDidUpdate() {
+    if (this.refs.address != null)
+      React.findDOMNode(this.refs.address).focus(); 
   },
 
   _onChange(e) {
     if (firstTime) {
       firstTime = false;
-      this.refs.address.getDOMNode().focus();
       this.setupAddressInput();
     }
 
@@ -102,7 +99,7 @@ var AddressModal = React.createClass({
          <div className='form-group'>
            <input className='form-control' id='address' ref="address" name='address' minlength='5' type='text' onChange={this._onChange} autofocus />
          </div>
-        <p><b>Rua:</b> {requestAddress.route},</p>
+        <p><b>Rua:</b> {requestAddress.route}</p>
         <p><b>Número:</b> {requestAddress.street_number}</p>
         <p><b>Cidade:</b> {requestAddress.locality} - {requestAddress.administrative_area_level_1}</p>
 
@@ -111,9 +108,9 @@ var AddressModal = React.createClass({
            <button type="button" className="btn btn-default" onClick={this.cancelModal}>Voltar</button>
            <button type="button" className="btn btn-primary" disabled={!this.isValidAddress()} onClick={this.closeModal}>Confirmar</button>
          </div>
-       </div>  
+       </div>
      </Modal>
-   ) 
+   )
  }
 });
 
