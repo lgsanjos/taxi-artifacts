@@ -36,8 +36,8 @@ var Header = React.createClass({
     return (
       <header className='header dark-bg'>
         <a href="/" className="logo">
-          Fast
-          <span className="lite">  Taxi</span>
+          Taxi
+          <span className="lite">  Finder</span>
         </a>
         <div className="top-nav notification-row">
            <ul className="nav pull-right top-menu">

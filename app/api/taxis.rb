@@ -10,14 +10,6 @@ module TaxiApp
         get('/') do
         end
 
-        desc "Stores the generated token from android app for GCM communication", entity: TaxiApp::Api::Entities::Taxi
-        put ':id' do
-          taxi = Taxi.find(params[:id])
-          taxi.gcm_token = params[:gcm_token]
-          taxi.save
-          present taxi, with: TaxiApp::Api::Entities::Taxi
-        end
-
         resource ":id/location" do
           desc "Updataes the current location", entity: TaxiApp::Api::Entities::Taxi
           put do
@@ -53,8 +45,9 @@ module TaxiApp
             hash = Oj.load(request.body.read)
             taxi = Taxi.new(hash)
             taxi.busy = true
-            taxi.generate_token
-            taxi.user =  User.new(name: 'teste', username: 'lixo')
+            taxi.user = User.new(hash['user'])
+            taxi.user.generate_token
+            #taxi.user = User.new(name: 'teste', username: 'lixo')
             taxi.save!
 
             present taxi, with: TaxiApp::Api::Entities::Taxi
@@ -71,8 +64,6 @@ module TaxiApp
             present taxi, with: TaxiApp::Api::Entities::Taxi
           end
 
-
-
           desc "Login the cab driver from android app", entity: TaxiApp::Api::Entities::Taxi
           post('/login') do
             hash = Oj.load(request.body.read)
@@ -82,10 +73,9 @@ module TaxiApp
             error!({message: 'falha no login', description: 'usuário incorreto'}, 401) if from_db.nil?
             error!({message: 'falha no login', description: 'senha incorreta'}, 401) unless from_db.password == user.password
 
-            error!({message: 'falha no login', description: 'Usuário não está associado a um taxi'}, 401) if from_db.taxi_id.nil?
-            taxi = Taxi.find(from_db.taxi_id)
+            error!({message: 'falha no login', description: 'Usuário não está associado a um taxi'}, 401) if from_db.taxi.nil?
 
-            present taxi, with: TaxiApp::Api::Entities::Taxi
+            present from_db.taxi, with: TaxiApp::Api::Entities::Taxi
           end
       end
     end

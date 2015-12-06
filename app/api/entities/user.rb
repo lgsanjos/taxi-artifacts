@@ -9,8 +9,8 @@ module TaxiApp
         expose :phone, documentation: { type: 'string', description: 'Full name' }
         expose :first_name, documentation: { type: 'string', description: 'First name' }
         expose :created_at, documentation: { type: 'dateTime', description: 'Account Creation Date' }
-
         expose :access_token, documentation: { type: 'string', required: true, description: 'Access Token' }
+        expose :gcm_token, documentation: { type: 'string', required: true, description: 'GCM Token' }
       end
     end
   end

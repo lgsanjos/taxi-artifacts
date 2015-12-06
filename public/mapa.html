@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>FastTaxi</title>
+  <title>Taxi Finder</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -16,10 +16,10 @@
 
   <style>
     body, html {
-      overflow: hidden; 
+      overflow: hidden;
     }
     #map {
-      height: 100%; 
+      height: 100%;
     }
   </style>
 
@@ -85,7 +85,7 @@
       }
     }
 
-    var map; 
+    var map;
     var markers = {}; // plate -> marker
 
     function removeCabMarker(cab) {
@@ -97,7 +97,7 @@
     }
 
     function pinCabMarker(cab) {
-      var car_description = cab.license_plate + ' / ' + cab.username + ' / ' + cab.phone; 
+      var car_description = cab.license_plate + ' / ' + cab.username + ' / ' + cab.phone;
 
       markers[cab.license_plate] = new google.maps.Marker({
         position: {lat: cab.last_location[0], lng: cab.last_location[1]},
@@ -114,7 +114,7 @@
         zoomControl: true
       });
 
-      refreshTaxis();      
+      refreshTaxis();
     }
 
  </script>

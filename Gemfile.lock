@@ -104,6 +104,7 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.3)
+    kgio (2.10.0)
     method_source (0.8.2)
     mime-types (2.6.2)
     minitest (5.8.0)
@@ -111,6 +112,7 @@ GEM
     multi_xml (0.5.5)
     nenv (0.2.0)
     netrc (0.10.3)
+    newrelic_rpm (3.14.0.305)
     oj (2.12.12)
     pg (0.18.2)
     pry (0.10.1)
@@ -128,6 +130,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    raindrops (0.15.0)
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -177,6 +180,10 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    unicorn (5.0.1)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     vcr (2.9.3)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -200,6 +207,7 @@ DEPENDENCIES
   grape-entity
   grape-swagger
   i18n
+  newrelic_rpm
   oj
   pg
   pry
@@ -214,6 +222,7 @@ DEPENDENCIES
   sinatra
   thin
   timecop
+  unicorn
   vcr
   webmock
   xmpp4r

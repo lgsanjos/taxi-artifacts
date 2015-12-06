@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
       :access_token,
       :created_at,
       :phone,
+      :gcm_token
 
   def generate_token
     self.access_token = SecureRandom.urlsafe_base64

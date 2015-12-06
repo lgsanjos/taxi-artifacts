@@ -25,6 +25,14 @@ module TaxiApp
           present users, with: TaxiApp::Api::Entities::User
         end
 
+        desc "Stores the generated token from android app for GCM communication", entity: TaxiApp::Api::Entities::User
+        put ":id/gcm_token" do
+          user = User.find(params[:id])
+          user.gcm_token = params[:gcm_token]
+          user.save!
+          present user, with: TaxiApp::Api::Entities::User
+        end
+
         desc "Update user profile", entity: TaxiApp::Api::Entities::User
         put('/update') do
             hash = Oj.load(request.body.read)

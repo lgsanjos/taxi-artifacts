@@ -32,6 +32,7 @@ var RequestTaxiForm = React.createClass({
     return {
       //confirm modal
       isConfirmRequestModal: false,
+      userWantsToOpenAddressModal: true,
       showAddressModal: false,
 
       // Error modal
@@ -45,7 +46,7 @@ var RequestTaxiForm = React.createClass({
       large_trunk: false,
       address: '',
       observation: '',
-      payment: 'money'
+      payment: 'dinheiro'
     };
   },
 
@@ -67,14 +68,15 @@ var RequestTaxiForm = React.createClass({
       address: '',
       observation: '',
       large_trunk: false,
-      payment: 'money'
+      payment: 'dinheiro'
     });
 
     this.refs.requestForm.getDOMNode().reset();
-    this.refs.cellphone.clear();
-    this.refs.phone.clear();
+    // this.refs.phone.rerender();
+    // this.refs.cellphone.clear();
+    // this.refs.phone.clear();
   },
-  
+
   toggleLargeTrunk: function() {
     this.setState({ large_trunk: !this.state.large_trunk });
   },
@@ -85,20 +87,25 @@ var RequestTaxiForm = React.createClass({
   },
 
   cancelAddressModal: function () {
-    this.setState({ showAddressModal: false});
+      this.hideAddressModal();
   },
 
   closeAddressModal: function (addressObject, completeAddressInLine) {
-    this.setState({ 
-      showAddressModal: false,
-      address: completeAddressInLine
-    });
-
+    this.setState({ address: completeAddressInLine });
     requestAddress = addressObject;
+
+    this.hideAddressModal();
+  },
+
+  hideAddressModal: function () {
+    React.findDOMNode(this.refs.name).focus();
+    this.setState({ showAddressModal: false });
+    setTimeout(() => {this.setState({ userWantsToOpenAddressModal: true }) }, 100);
   },
 
   openAddressModal: function () {
-    this.setState({ showAddressModal: true });
+    if (this.state.userWantsToOpenAddressModal)
+      this.setState({ showAddressModal: true, userWantsToOpenAddressModal: false });
   },
 
   closeMissingInfoModal: function () {
@@ -114,7 +121,7 @@ var RequestTaxiForm = React.createClass({
     request.payment = this.state.payment;
     request.created_at = new Date().toString();
     request.creator = {name: username };
-    request.large_trunk = this.state.large_trunk;
+    request.large_trunk = Boolean(this.state.large_trunk);
 
     var customer = {};
     customer.name = this.state.name;
@@ -150,12 +157,12 @@ var RequestTaxiForm = React.createClass({
 
   openConfirmRequestModal: function () {
     React.findDOMNode(this.refs.name).enabled = false;
-    this.setState({ isConfirmRequestModal: true }); 
+    this.setState({ isConfirmRequestModal: true });
   },
 
   handleSubmit: function(e) {
       e.preventDefault();
-      
+
       if (this.canSubmit()) {
         this.openConfirmRequestModal();
       }
@@ -167,7 +174,7 @@ var RequestTaxiForm = React.createClass({
     return (
     <div className='form'>
 
-       <AddressModal 
+       <AddressModal
          show={this.state.showAddressModal}
          defaultAddressString={this.state.address}
          defaultAddressObject={requestAddress}
@@ -192,7 +199,7 @@ var RequestTaxiForm = React.createClass({
            <div className="modal-footer">
              <button type="button" className="btn btn-default" onClick={this.closeMissingInfoModal}>Ok</button>
            </div>
-         </div>  
+         </div>
        </Modal>
 
        <Modal
@@ -226,7 +233,7 @@ var RequestTaxiForm = React.createClass({
              <button type="button" className="btn btn-default" onClick={this.closeConfirmModal}>Voltar</button>
              <button type="button" className="btn btn-primary" onClick={this.confirmModalAccepted}>Confirmar</button>
            </div>
-         </div>  
+         </div>
        </Modal>
 
       <form className='form-validate' onSubmit={this.handleSubmit} ref="requestForm" id='feedback_form' >
@@ -253,9 +260,12 @@ var RequestTaxiForm = React.createClass({
           Endereço
           <span className='required'>*</span>
         </label>
-        <input className='form-control' id='complete_address' ref="complete_address" name='complete_address' minlength='5' type='text' 
-        onClick={this.openAddressModal }
-        onChange={this.openAddressModal}
+        <input className='form-control'
+        id='complete_address'
+        ref="complete_address"
+        name='complete_address'
+        type='text'
+        onFocus={this.openAddressModal}
         value={this.state.address} />
       </div>
 
@@ -271,14 +281,11 @@ var RequestTaxiForm = React.createClass({
         </label>
         <br />
         <div className="btn-group" data-toggle="buttons">
-          <div className='radio'>
-            <label onClick={() => { this.setState({ payment: 'credit'})}}><input type='radio' name='payment' value='credit' onChange={this._onChange} disabled={this.state.isConfirmRequestModal} checked={this.state.payment=='credit'}/>Cartão de crédito</label>
+         <div className='radio'>
+            <label onClick={() => { this.setState({ payment: 'cartao'})}}><input type='radio' name='payment' value='cartao' onChange={this._onChange} disabled={this.state.isConfirmRequestModal} checked={this.state.payment=='cartao'}/>Cartão</label>
           </div>
-          <div className='radio'>
-            <label onClick={() => { this.setState({ payment: 'debt'})}}><input type='radio' name='payment' value='debt' onChange={this._onChange} disabled={this.state.isConfirmRequestModal} checked={this.state.payment=='debt'}/>Cartão de débito</label>
-          </div>
-          <div className='radio'>
-            <label onClick={() => { this.setState({ payment: 'money'})}}><input type='radio' name='payment' value='money' onChange={this._onChange} disabled={this.state.isConfirmRequestModal} checked={this.state.payment=='money'}/>Dinheiro</label>
+         <div className='radio'>
+            <label onClick={() => { this.setState({ payment: 'dinheiro'})}}><input type='radio' name='payment' value='dinheiro' onChange={this._onChange} disabled={this.state.isConfirmRequestModal} checked={this.state.payment=='dinheiro'}/>Dinheiro</label>
           </div>
         </div>
       </div>

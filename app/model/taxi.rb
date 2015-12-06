@@ -8,11 +8,13 @@ class Taxi < ActiveRecord::Base
       :large_trunk,
       :last_location,
       :payment_methods,
-      :gcm_token,
-      :busy,
-      :access_token
+      :busy
 
-  def generate_token
-    self.access_token = SecureRandom.urlsafe_base64
+  def gcm_token
+    user.gcm_token
+  end
+
+  def access_token
+    user.access_token
   end
 end

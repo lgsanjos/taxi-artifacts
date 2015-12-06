@@ -2,6 +2,7 @@ production:
   host: redis.taxifinder.com.br
   port: 6379
   database: 0
+  password: 7SM!d,%Vn7^TTE27C?PVVLXL=k.SR7qHq/Szj2(@Z?$kU\\nd^[+5*L>;-2mCSzsH_<da-[m4c<=ZgskD7V8kr7GCmX8SFd^?,:DzqscW?8xkv&ke-w*-ken`t]jP,e%qM[R&rV4qfq%A(F~AX?(G)TUk~[]pGm>bwaB%j{{AwB-`cA~&WL4}x^DA)=q\/~vJ'`S=9DB+a9Jy&"G5wH"#SeSeXU?ZRraq-5/N5<seB8+R+&R?<M$BBG7mA(:[a3X
 development:
   host: localhost
   port: 6379

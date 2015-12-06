@@ -14,6 +14,7 @@ module TaxiApp
         end
 
         params do
+          requires :large_trunk, type: Boolean
           requires :address, type: Hash do
             requires :location, :type => Hash do
                 requires :lat, type: Float, values: -90.0..+90.0
