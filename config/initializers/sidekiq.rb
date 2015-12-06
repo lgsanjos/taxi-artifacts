@@ -11,15 +11,16 @@ host = properties['host']
 port = properties['port']
 #namespace = properties[:namespace]
 db_num = properties['database']
+password = properties['password']
 
 #Sidekiq.configure_server do |config|
   #config.redis = { :host => "redis://#{host}:#{port}/#{db_num}", :namespace => namespace }
 #end
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://#{password}@#{host}:#{port}/#{db_num}"}
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://#{password}@#{host}:#{port}/#{db_num}"}
 end
