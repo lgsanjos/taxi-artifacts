@@ -37,10 +37,10 @@ module TaxiApp
         put ':id' do
           request = Request.find(params[:id])
           request.accepted_at = Time.now
-          request.taxi = params[:taxi] if params[:taxi]
+          request.driver = User.find(params[:driver_id])
           request.save!
 
-          taxi = Taxi.find(params[:taxi]['id'])
+          taxi = Taxi.find(request.driver.taxi.id)
           taxi.busy = true
           taxi.save!
 

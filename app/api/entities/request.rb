@@ -4,7 +4,7 @@ module TaxiApp
       class Request < Grape::Entity
         expose :id, documentation: { type: 'integer', description: 'Id from database' }
         expose :number, documentation: { type: 'integer', description: 'Email' }
-        expose :taxi, documentation: { type: 'string', description: 'Image' }
+        expose :driver, using: "TaxiApp::Api::Entities::User", documentation: { type: 'TaxiApp::Api::Entities::User', description: 'Taxi driver' }
         expose :customer, documentation: { type: 'string', description: 'Username' }
         expose :large_trunk, documentation: { type: 'boolean', description: 'large trunk' }
         expose :address, documentation: { type: 'string', description: 'Username' }
