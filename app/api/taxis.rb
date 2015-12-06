@@ -10,6 +10,14 @@ module TaxiApp
         get('/') do
         end
 
+        desc "Stores the generated token from android app for GCM communication", entity: TaxiApp::Api::Entities::Taxi
+        put ":id/gcm_token" do
+          taxi = Taxi.find(params[:id])
+          taxi.gcm_token = params[:gcm_token]
+          taxi.save!
+          present taxi, with: TaxiApp::Api::Entities::Taxi
+        end
+
         resource ":id/location" do
           desc "Updataes the current location", entity: TaxiApp::Api::Entities::Taxi
           put do
@@ -75,7 +83,7 @@ module TaxiApp
 
             error!({message: 'falha no login', description: 'Usuário não está associado a um taxi'}, 401) if from_db.taxi.nil?
 
-            present from_db.taxi, with: TaxiApp::Api::Entities::Taxi
+            present from_db, with: TaxiApp::Api::Entities::User
           end
       end
     end

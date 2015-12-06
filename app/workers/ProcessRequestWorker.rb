@@ -36,7 +36,7 @@ class ProcessRequestWorker
       <message id="">
         <gcm xmlns="google:mobile:data">
         {
-          "to": "#{taxi.user.gcm_token}",
+          "to": "#{taxi.gcm_token}",
           "priority": "high",
           "time_to_live": 0,
           "message_id":"m-#{message_id}",
