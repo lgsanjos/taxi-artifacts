@@ -18,9 +18,9 @@ password = properties['password']
 #end
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://#{password}@#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://#{password}@#{host}:#{port}/#{db_num}"}
+  config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
 end
