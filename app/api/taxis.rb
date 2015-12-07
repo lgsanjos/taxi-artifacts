@@ -25,6 +25,7 @@ module TaxiApp
 
             taxi = Taxi.find(params[:id])
             taxi.last_location = [hash['latitude'], hash['longitude']]
+            taxi.heartbeat = Time.now
             taxi.save!
 
             present taxi, with: TaxiApp::Api::Entities::Taxi

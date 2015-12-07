@@ -1,5 +1,6 @@
 require 'xmpp4r'
 require 'digest'
+require_relative '../services/taxi_chooser'
 
 class ProcessRequestWorker
   include Sidekiq::Worker
@@ -21,7 +22,9 @@ class ProcessRequestWorker
 
     taxis = Taxi.find_by_sql(sql)
     #taxis = Taxi.find_by_sql("SELECT *, earth_distance(ll_to_earth(#{location['lat']}, #{location['lng']}), ll_to_earth((data->'last_location'->>0)::float8, (data->'last_location'->>1)::float8)) as distance_from_current_location FROM taxis WHERE data @> '{ \"busy\": false }' and data->'payment_methods' @> '#{request.payment}' ORDER BY distance_from_current_location ASC LIMIT 10")
-    taxi = taxis[0]
+    taxi_chooser = TaxiChooser.new
+    taxi = taxi_chooser.first_alive(taxis)
+    #taxi = taxis[0]
 
     travel_time = TaxiApp::TravelTime.new
     estimative = travel_time.get_route(taxi, request)
