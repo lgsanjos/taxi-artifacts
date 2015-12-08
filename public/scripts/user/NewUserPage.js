@@ -77,7 +77,7 @@ var LoginPage = React.createClass({
 
   updateTaxiList: function () {
       $.ajax({
-          url: '/api/v1/taxis/list',
+          url: '/api/v1/taxis',
           type: 'GET',
           success: function(data) {
               this.setState({ taxi_list: data});
@@ -181,9 +181,8 @@ var LoginPage = React.createClass({
       }
   },
 
-  getTaxiDescription: function(id) {
-    let taxi = _.findWhere(this.state.taxi_list, {'id': parseInt(id)});
-    if (taxi === undefined)
+  getTaxiDescription: function(taxi) {
+    if (!taxi)
       return;
 
     let code = taxi.code === null ? '' : taxi.code;
@@ -266,7 +265,7 @@ var LoginPage = React.createClass({
                     <td>{user.email}</td>
                     <td>{user.username}</td>
                     <td>{user.phone}</td>
-                    <td>{this.getTaxiDescription(user.taxi_id)}</td>
+                    <td>{this.getTaxiDescription(user.taxi)}</td>
                   </tr>
                 )
               })

@@ -60,7 +60,7 @@ var NewTaxiPage = React.createClass({
 
   updateTaxi: function (taxi) {
        $.ajax({
-          url: '/api/v1/taxis/update',
+          url: '/api/v1/taxis',
           dataType: 'json',
           type: 'PUT',
           data: JSON.stringify(taxi),
@@ -77,7 +77,7 @@ var NewTaxiPage = React.createClass({
 
   submitNewTaxi: function (newTaxi) {
        $.ajax({
-          url: '/api/v1/taxis/signup',
+          url: '/api/v1/taxis',
           dataType: 'json',
           type: 'POST',
           data: JSON.stringify(newTaxi),
@@ -103,7 +103,7 @@ var NewTaxiPage = React.createClass({
       var newTaxi = {
         license_plate: this.state.license_plate,
         code: this.state.code,
-        large_trunk: this.state.bagageiro ? 'Sim' : '',
+        large_trunk: this.state.bagageiro ? true : false,
         payment_methods: payment_methods,
       };
 
@@ -119,7 +119,7 @@ var NewTaxiPage = React.createClass({
 
   updateTaxiList: function () {
       $.ajax({
-          url: '/api/v1/taxis/list',
+          url: '/api/v1/taxis',
           type: 'GET',
           success: function(data) {
               this.setState({ taxi_list: data});
