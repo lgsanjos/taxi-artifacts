@@ -18,9 +18,17 @@ password = properties['password']
 #end
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
+  if (ENV['RACK_ENV'] == "production")
+    config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
+  else
+    config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
+  end
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
+  if (ENV['RACK_ENV'] == "production")
+    config.redis = { url: "redis://:#{password}@#{host}:#{port}/#{db_num}"}
+  else
+    config.redis = { url: "redis://#{host}:#{port}/#{db_num}"}
+  end
 end
