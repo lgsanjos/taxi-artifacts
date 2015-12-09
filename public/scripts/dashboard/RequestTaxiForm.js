@@ -82,8 +82,8 @@ var RequestTaxiForm = React.createClass({
   },
 
   setMissingInfoError: function (message) {
-    this.setState({ isMissingInfoDialogOpen: true }); 
-    this.setState({ messageMissingInfoDialog: message }); 
+    this.setState({ isMissingInfoDialogOpen: true });
+    this.setState({ messageMissingInfoDialog: message });
   },
 
   cancelAddressModal: function () {
@@ -109,7 +109,7 @@ var RequestTaxiForm = React.createClass({
   },
 
   closeMissingInfoModal: function () {
-    this.setState({ isMissingInfoDialogOpen: false }); 
+    this.setState({ isMissingInfoDialogOpen: false });
   },
 
   confirmModalAccepted: function () {

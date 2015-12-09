@@ -23,8 +23,8 @@ var RequestRow = React.createClass({
     return (
        <div>
          <p><b>Aceito:</b> { convertDate(request.accepted_at)}</p>
-         <p><b>Por:</b> {request.taxi.username} <b> Cod.: </b> {request.taxi.id}</p>
-         <p><b>Placa:</b> {request.taxi.license_plate}</p>
+         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.id}</p>
+         <p><b>Placa:</b> {request.driver.license_plate}</p>
        </div>
     );
   },
@@ -39,7 +39,7 @@ var RequestRow = React.createClass({
   },
 
   rideInfo: function (request) {
-    var isAccepted = request.taxi ? true : false
+    var isAccepted = request.driver ? true : false
     if (isAccepted)
       return this.rideInfoAccepted(request);
 
@@ -78,7 +78,7 @@ var RequestRow = React.createClass({
 
   title: function (request) {
     var imgSrc = "/imgs/waiting_icon.png";
-    if (request.taxi)
+    if (request.driver)
       imgSrc = "/imgs/accepted_icon.png";
 
     if (request.tryouts >= 5)
