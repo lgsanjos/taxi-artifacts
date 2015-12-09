@@ -98,7 +98,7 @@ module TaxiApp
         desc "Return directions for the given points", entity: TaxiApp::Api::Entities::Taxi
         get('/directions') do
           travel_time = TaxiApp::TravelTime.new
-          estimative = travel_time.get_route(params[:origin].split(','), params[:destination].split(','))
+          estimative = travel_time.get_route_for(params[:origin].split(','), params[:destination].split(','))
           estimative['routes'][0]['overview_polyline']
         end
       end

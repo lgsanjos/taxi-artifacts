@@ -71,7 +71,7 @@ module TaxiApp
         parsed
       end
 
-      def get_route(origin, destination)
+      def get_route_for(origin, destination)
         url = "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin[0]},#{origin[1]}&destination=#{destination[0]},#{destination[1]}&language=pt-BR&mode=driving&key=AIzaSyAU6lgWN3JnMJfgmfHIY0WsKaE76RmQOy8"
         Oj.load(get(url).body)
       end
