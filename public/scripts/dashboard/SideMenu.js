@@ -9,7 +9,7 @@ var SideMenu = React.createClass({
       <div id="sidebar-wrapper" className="col-sm-3">
           <div id="content" className='nav-collapse sidebar-nav'>
             <div>
-              <RequestTaxiForm onRequestCreated={this.props.onRequestCreated} onRequestListChange={this.props.onRequestListChange}/>
+              <RequestTaxiForm onRequestCreated={this.props.onRequestCreated} onRequestListChange={this.props.onRequestListChange} taxiStatus={this.props.status}/>
             </div>
           </div>
       </div>

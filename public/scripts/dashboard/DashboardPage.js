@@ -9,7 +9,10 @@ var RequestList = require('./request_list/RequestList');
 var DashboardPage = React.createClass({
 
   getInitialState: function() {
-    return { requests: [] };
+    return {
+        requests: [],
+        status: { free: { total: 0}, busy: { total: 0} }
+    };
   },
 
   loadRequestsFromServer: function() {
@@ -29,10 +32,26 @@ var DashboardPage = React.createClass({
       });
   },
 
+  requestTaxiStatus: function() {
+    $.ajax({
+      url: '/api/v1/taxis/count',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+                 this.setState({ status: data });
+               }.bind(this),
+      error: function(xhr, status, err) {
+                 console.error(this.props.url, status, err.toString());
+             }.bind(this)
+      });
+  },
+
   componentDidMount: function () {
     this.loadRequestsFromServer();
+    this.requestTaxiStatus();
     setInterval(function () {
       this.loadRequestsFromServer();
+      this.requestTaxiStatus();
     }.bind(this), 3000)
   },
 
@@ -45,11 +64,11 @@ var DashboardPage = React.createClass({
   render: function () {
     return (
         <section>
-        <Header/>
+        <Header status={this.state.status} />
           <div className="container-fluid">
             <div className="row">
-              <SideMenu onRequestCreated={this.handleRequestCreated} onRequestListChange={this.loadRequestsFromServer} />
-              <RequestList requests={this.state.requests} />
+              <SideMenu onRequestCreated={this.handleRequestCreated} onRequestListChange={this.loadRequestsFromServer} taxiStatus={this.state.status} />
+              <RequestList requests={this.state.requests}/>
             </div>
           </div>
         </section>

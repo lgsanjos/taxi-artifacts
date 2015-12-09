@@ -6,7 +6,7 @@ var Header = React.createClass({
 
   getInitialState: function () {
     return {
-      username: 'Atendente01'
+      username: 'Atendente01',
     };
   },
 
@@ -28,7 +28,7 @@ var Header = React.createClass({
   },
 
   signOff: function () {
-    AuthService.signOff(); 
+    AuthService.signOff();
     window.location.href = '/login';
   },
 
@@ -41,6 +41,12 @@ var Header = React.createClass({
         </a>
         <div className="top-nav notification-row">
            <ul className="nav pull-right top-menu">
+             <li className="dropdown">
+               <a className="dropdown-toggle" ref="#">
+                 <span className="taxi-free">{this.props.status.free.total}</span>
+                 <span className="taxi-busy">{this.props.status.busy.total}</span>
+               </a>
+             </li>
              <li className="dropdown">
                <a data-toggle="dropdown" className="dropdown-toggle" href="#">
                   <span className="username">{this.state.username}</span>

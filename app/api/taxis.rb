@@ -33,6 +33,21 @@ module TaxiApp
           present taxi, with: TaxiApp::Api::Entities::Taxi
         end
 
+        desc "Returns the count of taxi status"
+        get('/count') do
+            # result = Taxi.find_by_sql "SELECT count(id) FROM taxis GROUP BY data @> '{ \"busy\": false }'"
+            res = {}
+            res[:free] = { total: 10,
+                           :large_trunk => {
+                             total: 2,
+                             dinheiro: 2,
+                             cartao: 2},
+                           dinheiro: 10,
+                           cartao: 5 }
+            res[:busy] = { total: 15 }
+            present res
+        end
+
         desc "Stores the generated token from android app for GCM communication", entity: TaxiApp::Api::Entities::Taxi
         put ":id/gcm_token" do
           taxi = Taxi.find(params[:id])

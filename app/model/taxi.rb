@@ -15,6 +15,7 @@ class Taxi < ActiveRecord::Base
       :heartbeat
 
   def is_alive
-    (Time.now - Time.parse(self.heartbeat)) < 10 #if passed 16 seconds without sending last_location
+    return false if self.heartbeat.nil?
+    (Time.now - Time.parse(self.heartbeat)) < 16 #if passed 16 seconds without sending last_location
   end
 end
