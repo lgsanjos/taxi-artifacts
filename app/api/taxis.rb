@@ -39,8 +39,8 @@ module TaxiApp
             res = {}
             res[:free] = { total: 10,
                            :large_trunk => {
-                             total: 2,
-                             dinheiro: 2,
+                             total: 3,
+                             dinheiro: 3,
                              cartao: 2},
                            dinheiro: 10,
                            cartao: 5 }

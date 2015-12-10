@@ -169,8 +169,23 @@ var RequestTaxiForm = React.createClass({
       return;
   },
 
-  render: function () {
+  countTaxisAvailable: function () {
+      if (this.state.large_trunk && this.state.payment == 'dinheiro')
+          return this.props.taxiStatus.free.large_trunk.dinheiro;
 
+      if (this.state.large_trunk && this.state.payment == 'cartao')
+          return this.props.taxiStatus.free.large_trunk.cartao;
+
+      if (!this.state.large_trunk && this.state.payment == 'dinheiro')
+          return this.props.taxiStatus.free.dinheiro;
+
+      if (!this.state.large_trunk && this.state.payment == 'cartao')
+          return this.props.taxiStatus.free.cartao;
+
+      return 0;
+  },
+
+  render: function () {
     return (
     <div className='form'>
 
@@ -214,20 +229,31 @@ var RequestTaxiForm = React.createClass({
              </button>
              <h4 className="modal-title">Realizar chamado?</h4>
            </div>
-           <div className="modal-body">
-             <h4>Cliente:</h4>
-             <p><b>Nome:</b> {this.state.name}</p>
-             <p><b>Celular:</b> {this.state.cellphone}</p>
-             <p><b>Telefone:</b> {this.state.phone}</p>
-             <hr/>
-             <h4>Endereço:</h4>
-             <p><b>Rua:</b> {requestAddress.route}, N. {requestAddress.street_number}</p>
-             <p><b>Cidade:</b> {requestAddress.locality} - {requestAddress.administrative_area_level_1}</p>
-             <hr/>
-             <h4>Outros:</h4>
-             <p><b>Bagageiro:</b> {this.state.large_trunk ? 'Sim' : 'Não'}</p>
-             <p><b>Pagamento:</b> {paymentMethodLabel(this.state.payment)}</p>
-             <p><b>Obs:</b> {this.state.observation}</p>
+           <div className="modal-body container-fluid">
+             <div className="row">
+                 <div className="col-md-6">
+                     <h4>Cliente:</h4>
+                     <p><b>Nome:</b> {this.state.name}</p>
+                     <p><b>Celular:</b> {this.state.cellphone}</p>
+                     <p><b>Telefone:</b> {this.state.phone}</p>
+                 </div>
+                 <div className="col-md-6">
+                     <h4>Endereço:</h4>
+                     <p><b>Rua:</b> {requestAddress.route}, N. {requestAddress.street_number}</p>
+                     <p><b>Cidade:</b> {requestAddress.locality} - {requestAddress.administrative_area_level_1}</p>
+                 </div>
+             </div>
+             <div className="row">
+                <div className="col-md-6">
+                   <h4>Outros:</h4>
+                   <p><b>Bagageiro:</b> {this.state.large_trunk ? 'Sim' : 'Não'}</p>
+                   <p><b>Pagamento:</b> {paymentMethodLabel(this.state.payment)}</p>
+                </div>
+                 <div className="col-md-6">
+                   <h4>Taxis Disponíveis: <b className={this.countTaxisAvailable() === 0 ? 'zero' : 'positive'}>{this.countTaxisAvailable()}</b></h4>
+                   <p><b>Obs:</b> {this.state.observation}</p>
+                 </div>
+             </div>
            </div>
            <div className="modal-footer">
              <button type="button" className="btn btn-default" onClick={this.closeConfirmModal}>Voltar</button>

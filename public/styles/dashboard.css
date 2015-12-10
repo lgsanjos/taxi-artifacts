@@ -92,11 +92,6 @@ table tr th { color: #688a7e;}
   margin-right: 15px;
 }
 
-.header .taxi-total {
-  color: #16F2F2;
-  font-weight: 200;
-}
-
 .white-bg {
     background: rgba(255,255,255,0.9);
     border-bottom: 1px solid #f1f2f7;
@@ -636,4 +631,12 @@ div.request-list-header .search-icon {
 div.request-list-header .search-input,
 div.request-list-header .search-field{
   width: 100%;
+}
+
+.positive {
+  color: #76A646;
+}
+
+.zero {
+  color: #A64646;
 }
