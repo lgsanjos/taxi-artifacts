@@ -51,6 +51,7 @@ module TaxiApp
         resource ':id/reject' do
           post do
             request = Request.find(params[:id])
+            request.driver = nil
             request.save!
             ProcessRequestWorker.perform_async request.id
             present request, with: TaxiApp::Api::Entities::Request

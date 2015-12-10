@@ -30,6 +30,9 @@ class ProcessRequestWorker
     estimative = travel_time.get_route(taxi, request)
     route = estimative['routes'][0]
 
+    request.tryouts += 1
+    request.save!
+
     message_id = Digest::SHA1.hexdigest([Time.now, rand].join)
     client = Jabber::Client.new('854946048207@gcm.googleapis.com')
     client.use_ssl = true
