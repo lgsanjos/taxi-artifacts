@@ -71,5 +71,6 @@ class ProcessRequestWorker
       XML
       logger.info message_body
       client.send message_body
+      FlowCheckerWorker.perform_in(40.seconds, request.id, request.tryouts)
   end
 end

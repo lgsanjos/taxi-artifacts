@@ -10,7 +10,7 @@ module TaxiApp
       resource :requests do
         desc "Returns the most recent requests"
         get('/') do
-          requests = Request.all.select { |r| Date.parse(r.created_at) >= Date.today.minusDays(1)}
+          requests = Request.all.select { |r| Date.parse(r.created_at) >= Date.today}
           present requests, with: TaxiApp::Api::Entities::Request
         end
 
