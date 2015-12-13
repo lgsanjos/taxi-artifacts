@@ -17,7 +17,7 @@ class ProcessRequestWorker
   def perform(id)
     Sidekiq::Logging.logger.level = Logger::INFO
     request = Request.find(id)
-    
+
     return if request.has_attribute?(:driver)
     return if exceed_5_tries_and_no_taxi_replied(request)
 
@@ -36,7 +36,7 @@ class ProcessRequestWorker
     taxi = taxi_chooser.first_alive(taxis, request.taxis_tried)
     #If we didn't find any taxi matching the requirements we try again after 15 seconds, we try 5 times if after 5 times we didn't find anything we set status to error
     if taxi.nil?
-      ProcessRequestWorker.perform_in(15.seconds, request.id) 
+      ProcessRequestWorker.perform_in(15.seconds, request.id)
       request.tryouts += 1
       request.save!
       return
@@ -47,6 +47,7 @@ class ProcessRequestWorker
     route = estimative['routes'][0]
 
     request.tryouts += 1
+    request.taxis_tried = [] if request.taxis_tried.nil?
     request.taxis_tried << taxi
     request.save!
 
