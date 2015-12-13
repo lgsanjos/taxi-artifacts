@@ -5,10 +5,21 @@ require_relative '../services/taxi_chooser'
 class ProcessRequestWorker
   include Sidekiq::Worker
 
+  def exceed_5_tries_and_no_taxi_replied(request)
+    if !request.has_attribute?(:driver) && request.tryouts >= 5
+      request.status  = "error"
+      return true
+    else
+      return false
+    end
+  end
+
   def perform(id)
     Sidekiq::Logging.logger.level = Logger::INFO
     request = Request.find(id)
+    
     return if request.has_attribute?(:driver)
+    return if exceed_5_tries_and_no_taxi_replied(request)
 
     creator = request.creator
     customer = request.customer
@@ -23,6 +34,13 @@ class ProcessRequestWorker
     taxis = Taxi.find_by_sql(sql)
     taxi_chooser = TaxiChooser.new
     taxi = taxi_chooser.first_alive(taxis, request.taxis_tried)
+    #If we didn't find any taxi matching the requirements we try again after 15 seconds, we try 5 times if after 5 times we didn't find anything we set status to error
+    if taxi.nil?
+      ProcessRequestWorker.perform_in(15.seconds, request.id) 
+      request.tryouts += 1
+      request.save!
+      return
+    end
 
     travel_time = TaxiApp::TravelTime.new
     estimative = travel_time.get_route(taxi, request)
