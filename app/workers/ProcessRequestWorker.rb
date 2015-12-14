@@ -48,7 +48,7 @@ class ProcessRequestWorker
 
     request.tryouts += 1
     request.taxis_tried = [] if request.taxis_tried.nil?
-    request.taxis_tried << taxi
+    request.taxis_tried << taxi.id
     request.save!
 
     message_id = Digest::SHA1.hexdigest([Time.now, rand].join)

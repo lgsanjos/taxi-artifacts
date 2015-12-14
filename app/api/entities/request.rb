@@ -14,6 +14,7 @@ module TaxiApp
         expose :observation, documentation: { type: 'string', description: 'observation' }
         expose :payment, documentation: { type: 'string', description: 'payment type' }
         expose :tryouts, documentation: { type: 'integer', description: 'Attempts to find a cab' }
+        expose :status, documentation: { type: 'string', description: 'request status' }
       end
     end
   end
