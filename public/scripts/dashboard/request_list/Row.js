@@ -3,7 +3,7 @@
 var React = require('react/addons');
 
 var convertDate = function (date) {
-  function padDateTime(dt) { //Add a preceding zero to months and days < 10
+  function padDateTime(dt) { 
     return dt < 10 ? "0"+dt : dt;
   }
 
@@ -23,7 +23,7 @@ var RequestRow = React.createClass({
     return (
        <div>
          <p><b>Aceito:</b> { convertDate(request.accepted_at)}</p>
-         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.id}</p>
+         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.taxi_id}</p>
          <p><b>Placa:</b> {request.driver.license_plate}</p>
        </div>
     );
@@ -69,7 +69,7 @@ var RequestRow = React.createClass({
        <p><b>Obs: </b>{request.observation}</p>
      </div>
     </div>
-  ) 
+  )
   },
 
   format_date: function(datetime) {
@@ -102,7 +102,7 @@ var RequestRow = React.createClass({
         </div>
       </div>
     )
-  }, 
+  },
 
   render: function () {
     var request = this.props.request;
@@ -115,7 +115,6 @@ var RequestRow = React.createClass({
       </div>
     )
   }
-
 });
 
 module.exports = RequestRow;
