@@ -38,10 +38,13 @@ module TaxiApp
         put ':id' do
           request = Request.find(params[:id])
           request.accepted_at = Time.now
-          request.driver = User.find(params[:driver_id])
+          user = User.find(params[:driver_id])
+          user_hash = user.as_json.except('taxi_id')
+          user_hash['taxi'] = user.taxi.as_json
+          request.driver = user_hash
           request.save!
 
-          taxi = Taxi.find(request.driver.taxi.id)
+          taxi = Taxi.find(request.driver['taxi']['id'])
           taxi.busy = true
           taxi.save!
 
@@ -52,12 +55,13 @@ module TaxiApp
           post do
             request = Request.find(params[:id])
             if (!request.driver.nil?)
-              taxi = Taxi.find(request.driver.taxi.id)
+              taxi = Taxi.find(request.driver['taxi']['id'])
               taxi.busy = false
               taxi.save!
             end
 
-            request.driver = nil
+            #request.driver = nil
+            request.data.delete('driver')
             request.save!
 
             ProcessRequestWorker.perform_async request.id

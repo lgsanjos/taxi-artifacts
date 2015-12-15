@@ -1,6 +1,4 @@
 require 'active_record'
-require 'pry'
-require 'pry-nav'
 
 class Taxi < ActiveRecord::Base
   has_many :users
