@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 
-var MaskedInput = require('react-maskedinput');
+var MaskedInput = require('../tools/MaskedInput');
 var Modal = require('react-modal');
 var AddressModal = require('./request_form/AddressModal');
 
@@ -72,9 +72,8 @@ var RequestTaxiForm = React.createClass({
     });
 
     this.refs.requestForm.getDOMNode().reset();
-    // this.refs.phone.rerender();
-    // this.refs.cellphone.clear();
-    // this.refs.phone.clear();
+    this.refs.cellphone.clear();
+    this.refs.phone.clear();
   },
 
   toggleLargeTrunk: function() {
