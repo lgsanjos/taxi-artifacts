@@ -10,7 +10,7 @@ module TaxiApp
       resource :requests do
         desc "Returns the most recent requests"
         get('/') do
-          requests = Request.all.select { |r| Date.parse(r.created_at) >= Date.today}
+          requests = Request.all
           present requests, with: TaxiApp::Api::Entities::Request
         end
 
@@ -40,7 +40,10 @@ module TaxiApp
           request.accepted_at = Time.now
           user = User.find(params[:driver_id])
           user_hash = user.as_json.except('taxi_id')
-          user_hash['taxi'] = user.taxi.as_json
+          user_hash = user_hash.merge(user_hash.delete('data'))
+          taxi_hash = user.taxi.as_json
+          taxi_hash = taxi_hash.merge(taxi_hash.delete('data'))
+          user_hash['taxi'] = taxi_hash
           request.driver = user_hash
           request.save!
 
