@@ -25,6 +25,13 @@ module TaxiApp
           present users, with: TaxiApp::Api::Entities::User
         end
 
+        desc "Search for users alive", options(true, true).merge({entity: TaxiApp::Api::Entities::User, is_array: true})
+        get('/alive') do
+          users = User.all.select { |u| u.taxi.present? and u.taxi.is_alive }
+          present users, with: TaxiApp::Api::Entities::User
+        end
+
+
         desc "Update user profile", entity: TaxiApp::Api::Entities::User
         put('/update') do
             hash = Oj.load(request.body.read)

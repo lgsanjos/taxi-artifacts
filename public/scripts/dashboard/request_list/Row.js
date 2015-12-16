@@ -23,8 +23,8 @@ var RequestRow = React.createClass({
     return (
        <div>
          <p><b>Aceito:</b> { convertDate(request.accepted_at)}</p>
-         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.taxi_id}</p>
-         <p><b>Placa:</b> {request.driver.license_plate}</p>
+         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.data.taxi.id}</p>
+         <p><b>Placa:</b> {request.driver.data.taxi.license_plate}</p>
        </div>
     );
   },
@@ -39,8 +39,7 @@ var RequestRow = React.createClass({
   },
 
   rideInfo: function (request) {
-    var isAccepted = request.driver ? true : false
-    if (isAccepted)
+    if (request.driver && request.driver.username != null)
       return this.rideInfoAccepted(request);
 
     return this.rideInfoPendding(request);
