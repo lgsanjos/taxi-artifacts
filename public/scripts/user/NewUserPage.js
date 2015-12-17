@@ -187,8 +187,8 @@ var LoginPage = React.createClass({
     if (!taxi)
       return;
 
-    let code = taxi.code === null ? '' : taxi.code;
-    let separator = code === '' ? '' : ' - ';
+    var code = taxi.code === null ? '' : taxi.code;
+    var separator = code === '' ? '' : ' - ';
     return code + separator + taxi.license_plate;
   },
 
