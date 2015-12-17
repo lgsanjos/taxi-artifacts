@@ -23,8 +23,10 @@ var RequestRow = React.createClass({
     return (
        <div>
          <p><b>Aceito:</b> { convertDate(request.accepted_at)}</p>
-         <p><b>Por:</b> {request.driver.username} <b> Cod.: </b> {request.driver.taxi.id}</p>
+         <p><b>Por:</b> {request.driver.username}</p>
+         <p><b>Código:</b> {request.driver.taxi.code}</p>
          <p><b>Placa:</b> {request.driver.taxi.license_plate}</p>
+         <p><b>Telefone:</b> {request.driver.phone}</p>
        </div>
     );
   },

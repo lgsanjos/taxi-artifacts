@@ -80,7 +80,9 @@ var LoginPage = React.createClass({
           url: '/api/v1/taxis',
           type: 'GET',
           success: function(data) {
-              this.setState({ taxi_list: data});
+              var result = data.slice(0);
+              result.unshift('');
+              this.setState({ taxi_list: result});
           }.bind(this),
           error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
@@ -230,7 +232,11 @@ var LoginPage = React.createClass({
                 <select className='form-control' id="taxi_id" name='taxi_id' ref="taxi_id" onChange={this._onChange} value={this.state.taxi_id}>
                 {
                     this.state.taxi_list.map( (taxi) => {
-                        return (<option value={taxi.id}>{taxi.code} - {taxi.license_plate}</option>)
+                        if (taxi == '') {
+                          return(<option></option>)
+                        } else {
+                          return (<option value={taxi.id}>{taxi.code} - {taxi.license_plate}</option>)
+                        }
                     })
                 }
                 </select>

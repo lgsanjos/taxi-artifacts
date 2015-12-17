@@ -196,7 +196,6 @@ var NewTaxiPage = React.createClass({
                   <td>Placa</td>
                   <td>Bagageiro</td>
                   <td>Formas de pagamento</td>
-                  <td>Situação</td>
                 </tr>
               </thead>
               <tbody>
@@ -209,7 +208,6 @@ var NewTaxiPage = React.createClass({
                     <td>{taxi.license_plate}</td>
                     <td>{taxi.large_trunk}</td>
                     <td>{taxi.payment_methods.join(', ')}</td>
-                    <td>{taxi.busy ? 'Sim' : taxi.busy}</td>
                   </tr>
                 )
               })
