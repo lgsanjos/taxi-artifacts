@@ -15,6 +15,7 @@ gem 'xmpp4r'
 gem 'sinatra'
 gem 'rest-client'
 gem 'sass'
+gem 'standalone_migrations'
 
 group :production do
   gem 'unicorn'
