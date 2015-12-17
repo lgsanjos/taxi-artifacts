@@ -169,6 +169,9 @@ var RequestTaxiForm = React.createClass({
   },
 
   countTaxisAvailable: function () {
+      if (this.props.taxiStatus.free.total === 0)
+          return 0;
+
       if (this.state.large_trunk && this.state.payment == 'dinheiro')
           return this.props.taxiStatus.free.large_trunk.dinheiro;
 

@@ -16,4 +16,25 @@ class Taxi < ActiveRecord::Base
     return false if self.heartbeat.nil?
     (Time.now - Time.parse(self.heartbeat)) < 16 #if passed 16 seconds without sending last_location
   end
+
+  def free?
+    not self.busy?
+  end
+
+  def busy?
+    self.busy == true
+  end
+
+  def large_trunk?
+    self.large_trunk == true
+  end
+
+  def accepts_card?
+    self.payment_methods.include? 'cartao'
+  end
+
+  def accepts_money?
+    self.payment_methods.include? 'dinheiro'
+  end
+
 end

@@ -35,17 +35,58 @@ module TaxiApp
 
         desc "Returns the count of taxi status"
         get('/count') do
-            # result = Taxi.find_by_sql "SELECT count(id) FROM taxis GROUP BY data @> '{ \"busy\": false }'"
-            res = {}
-            res[:free] = { total: 10,
-                           :large_trunk => {
-                             total: 3,
-                             dinheiro: 3,
-                             cartao: 2},
-                           dinheiro: 10,
-                           cartao: 5 }
-            res[:busy] = { total: 15 }
-            present res
+            count =
+            {
+              'free' => {
+                'total' => 0,
+                'large_trunk' => {
+                  'total' => 0,
+                  'cartao' => 0,
+                  'dinheiro' => 0
+                 }
+               },
+
+               'busy' => {
+                 'total' => 0
+               }
+            }
+
+            all_taxis = Taxi.all.select(&:is_alive)
+            all_free = all_taxis.select(&:free?)
+            all_free_large_trunk = all_free.select(&:large_trunk?)
+
+            count['free']['total'] = all_free.size 
+            count['free']['cartao'] = all_free.select(&:accepts_card?).size
+            count['free']['dinheiro'] = all_free.select(&:accepts_money?).size
+            count['free']['large_trunk']['total'] = all_free_large_trunk.size
+            count['free']['large_trunk']['dinheiro'] = all_free_large_trunk.select(&:accepts_money?).size
+            count['free']['large_trunk']['cartao'] = all_free_large_trunk.select(&:accepts_cartao?).size
+            count['busy']['total'] = all_taxis.select(&:busy?).size
+            present count
+            # sql =  "SELECT data->'busy' as status, data->'large_trunk' as large_trunk, count(data) as total, p as payment_method FROM taxis, jsonb_array_elements(data->'payment_methods') p GROUP BY data->'busy', data->'large_trunk', p"
+            # result = ActiveRecord::Base.connection.execute(sql)
+            # count = { 'free' => {},
+            #            'busy' => {}}
+
+            # busycount = 0
+            # totalfree = 0
+            # totalfree_large_trunk = 0
+            # result.values.each do |value|
+            #   if value[0] == "false"
+            #     if value[1] == "true"
+            #       count['free'].merge!({ 'large_trunk' => { value[3] => value[2] } })
+            #       totalfree_large_trunk += 1
+            #     else
+            #       count['free'].merge!({ value[3] => value[2] })
+            #     end
+            #     totalfree += 1
+            #   else
+            #     busycount += 1
+            #   end
+            # end
+            # count['busy'] = { 'total' => busycount}
+            # count['free'].merge!({ 'total' => totalfree})
+            # count['free']['large_trunk'].merge!({ 'total' => totalfree_large_trunk}) if totalfree_large_trunk > 0
         end
 
         desc "Stores the generated token from android app for GCM communication", entity: TaxiApp::Api::Entities::Taxi
