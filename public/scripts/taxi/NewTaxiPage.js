@@ -11,7 +11,7 @@ var NewTaxiPage = React.createClass({
       license_plate: '',
       code: '',
       payment_method: '',
-      bagageiro: '',
+      large_trunk: '',
       dinheiro: true,
       cartao: false
     }
@@ -23,7 +23,7 @@ var NewTaxiPage = React.createClass({
         license_plate: '',
         code: '',
         payment_method: '',
-        bagageiro: '',
+        large_trunk: '',
         dinheiro: true,
         cartao: false
     });
@@ -35,7 +35,7 @@ var NewTaxiPage = React.createClass({
         id: taxi.id,
         license_plate: taxi.license_plate,
         code: taxi.code,
-        bagageiro: taxi.large_trunk,
+        large_trunk: taxi.large_trunk,
         dinheiro: taxi.payment_methods.indexOf('dinheiro') > -1,
         cartao: taxi.payment_methods.indexOf('cartao') > -1,
         payment_method: taxi.payment_methods
@@ -104,7 +104,7 @@ var NewTaxiPage = React.createClass({
         id: this.state.id,
         license_plate: this.state.license_plate,
         code: this.state.code,
-        large_trunk: this.state.bagageiro ? true : false,
+        large_trunk: this.state.large_trunk ? true : false,
         payment_methods: payment_methods,
       };
 
@@ -159,8 +159,8 @@ var NewTaxiPage = React.createClass({
               <div className="pull-down">
                 <label className="checkbox-inline">
                   <input type="checkbox"
-                    checked={this.state.bagageiro}
-                    onChange={this.handleChange.bind(this, 'bagageiro')}/> Sim
+                    checked={this.state.large_trunk}
+                    onChange={this.handleChange.bind(this, 'large_trunk')}/> Sim
                 </label>
                </div>
             </div>
@@ -207,7 +207,7 @@ var NewTaxiPage = React.createClass({
                     <td>{taxi.id}</td>
                     <td>{taxi.code}</td>
                     <td>{taxi.license_plate}</td>
-                    <td>{taxi.large_trunk}</td>
+                    <td>{taxi.large_trunk ? 'Sim' : 'Não'}</td>
                     <td>{taxi.payment_methods.join(', ')}</td>
                   </tr>
                 )
