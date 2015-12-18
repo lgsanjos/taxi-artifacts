@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'xmpp4r'
 require 'digest'
 require_relative '../services/taxi_chooser'
