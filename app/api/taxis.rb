@@ -25,11 +25,12 @@ module TaxiApp
         desc "Updates a taxi info", entity: TaxiApp::Api::Entities::Taxi
         put('/') do
           hash = Oj.load(request.body.read)
-          taxi = Taxi.find(params[:id])
-          taxi.license_plate = params[:license_plate]
-          taxi.code = params[:code]
-          taxi.payment_methods = params[:payment_methods]
-          taxi.large_trunk = params[:large_trunk]
+          taxi = Taxi.find(hash['id'])
+          taxi.license_plate = hash['license_plate']
+          taxi.code = hash['code']
+          taxi.payment_methods = hash['payment_methods']
+          taxi.large_trunk = hash['large_trunk']
+          taxi.save!
           present taxi, with: TaxiApp::Api::Entities::Taxi
         end
 

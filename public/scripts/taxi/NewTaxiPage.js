@@ -32,7 +32,7 @@ var NewTaxiPage = React.createClass({
   edit: function(taxi) {
     this.setState({
         edit_mode: true,
-
+        id: taxi.id,
         license_plate: taxi.license_plate,
         code: taxi.code,
         bagageiro: taxi.large_trunk,
@@ -101,6 +101,7 @@ var NewTaxiPage = React.createClass({
       payment_methods = payment_methods.concat(this.state.cartao ? ["cartao"] : []);
 
       var newTaxi = {
+        id: this.state.id,
         license_plate: this.state.license_plate,
         code: this.state.code,
         large_trunk: this.state.bagageiro ? true : false,
