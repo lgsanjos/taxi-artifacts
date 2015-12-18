@@ -54,7 +54,8 @@ class ProcessRequestWorker
     message_id = Digest::SHA1.hexdigest([Time.now, rand].join)
     client = Jabber::Client.new('854946048207@gcm.googleapis.com')
     client.use_ssl = true
-    client.connect('gcm-preprod.googleapis.com',5236)
+    #client.connect('gcm-preprod.googleapis.com',5236)
+    client.connect('gcm-xmpp.googleapis.com',5235)
     client.auth('AIzaSyAU6lgWN3JnMJfgmfHIY0WsKaE76RmQOy8')
     message_body = <<-XML
       <message id="">
