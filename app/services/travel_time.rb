@@ -1,8 +1,7 @@
+#encoding: utf-8
 require 'oj'
 require 'timeout'
 require "uri"
-require 'json'
-require 'json'
 require 'rest-client'
 
 module TaxiApp
@@ -34,7 +33,7 @@ module TaxiApp
       end
 
       def inspect_for_client_errors!(response)
-        status = JSON.parse(response.body).fetch "status"
+        status = Oj.load(response.body).fetch "status"
         #status = JSON.parse(response.body).fetch "status"
 
         puts status

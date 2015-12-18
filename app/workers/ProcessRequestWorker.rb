@@ -31,6 +31,7 @@ class ProcessRequestWorker
     sql = "SELECT *, earth_distance(ll_to_earth(#{location['lat']}, #{location['lng']}), ll_to_earth((data->'last_location'->>0)::float8, (data->'last_location'->>1)::float8)) as distance_from_current_location FROM taxis WHERE data @> '{ \"busy\": false }' and data->'payment_methods' @> '\"#{request.payment}\"'"
     sql << " and data @>'{ \"large_trunk\": true }'" if request.large_trunk
     order_by = " ORDER BY distance_from_current_location ASC LIMIT 10"
+    sql << order_by
 
     taxis = Taxi.find_by_sql(sql)
     taxi_chooser = TaxiChooser.new
