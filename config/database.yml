@@ -12,6 +12,7 @@ test:
 
 production:
   host: db.taxifinder.com.br
+  encoding: unicode
   adapter: postgresql
   database: taxi-prod
   prepared_statements: false
