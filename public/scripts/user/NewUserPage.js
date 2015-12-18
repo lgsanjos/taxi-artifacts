@@ -104,6 +104,7 @@ var LoginPage = React.createClass({
           }.bind(this),
           error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
+              alert('Erro ao atualizar o usuário: Verifique se o usuário ou o email já estão em uso.');
           }.bind(this)
       });
   },
@@ -121,6 +122,7 @@ var LoginPage = React.createClass({
           }.bind(this),
           error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
+              alert('Erro ao cadastrar usuário: Verifique se o usuário ou o email já estão em uso.');
           }.bind(this)
       });
   },

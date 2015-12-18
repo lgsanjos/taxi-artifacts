@@ -28,8 +28,9 @@ module TaxiApp
             hash = Oj.load(request.body.read)
             from_db = User.where('data @> ?', {username: hash['username']}.to_json).first
             error!({statusCode: 409, message: 'Este nome de usuário já existe', description: 'Usuário já existe'}, 409) if !from_db.nil?
+
             from_db = User.where('data @> ?', {email: hash['email']}.to_json).first
-            error!({statusCode: 409, message: 'Este email já está cadastrado em nossa base', description: 'Email já existe'}, 409) if !from_db.nil?
+            # error!({statusCode: 409, message: 'Este email já está cadastrado em nossa base', description: 'Email já existe'}, 409) if !from_db.nil?
 
             user = User.new(hash)
             user.generate_token
