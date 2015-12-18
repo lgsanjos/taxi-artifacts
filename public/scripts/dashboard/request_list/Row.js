@@ -59,7 +59,7 @@ var RequestRow = React.createClass({
         <p><b>Telefone: </b>{request.customer.phone}</p>
         <p><b>Endereço: </b>
           <br />&nbsp;&nbsp;{address.route + ", " + address.street_number}
-          <br />&nbsp;&nbsp;{address.neighborhood + ", " + address.locality + " - " + address.administrative_area_level_1}</p>
+          <br />&nbsp;&nbsp;{address.locality + " - " + address.administrative_area_level_1}</p>
       </div>
       <div className='request-info col-md-4'>
         { this.rideInfo(request) }

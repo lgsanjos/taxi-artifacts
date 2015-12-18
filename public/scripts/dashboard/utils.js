@@ -1,9 +1,8 @@
 
 function paymentMethodLabel(label) {
    var dic = [] ;
-    dic['money'] = 'Dinheiro';
-    dic['debt'] = 'Cartão Débito';
-    dic['credit'] = 'Cartão Crédito';
+    dic['dinheiro'] = 'Dinheiro';
+    dic['cartao'] = 'Cartão';
    return dic[label] || '';
 }
 
