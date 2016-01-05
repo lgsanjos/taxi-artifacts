@@ -66,6 +66,7 @@ class ProcessRequestWorker
           "to": "#{taxi.gcm_token}",
           "priority": "high",
           "time_to_live": 0,
+          "delay_while_idle": false,
           "message_id":"m-#{message_id}",
           "data": {
              "id": "#{request.id}",
